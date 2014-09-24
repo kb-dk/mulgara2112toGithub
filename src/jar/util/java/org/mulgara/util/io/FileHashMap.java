@@ -992,6 +992,9 @@ public class FileHashMap implements Map<ByteBuffer,ByteBuffer>, Closeable {
     /** The path of this metadata file. */
     private final File path;
 
+    /** The file to access */
+    private final RandomAccessFile raFile;
+    
     /** File for metadata about the hash table */
     private final FileChannel mdFile;
 
@@ -1013,15 +1016,15 @@ public class FileHashMap implements Map<ByteBuffer,ByteBuffer>, Closeable {
     public MetaData(File f) throws IOException {
       path = new File(f.getAbsolutePath() + MD_EXT);
       created = !path.exists();
-      RandomAccessFile file = new RandomAccessFile(path, "rw");
+      raFile = new RandomAccessFile(path, "rw");
       if (created) {
-        file.setLength(TOTAL_SIZE);
+        raFile.setLength(TOTAL_SIZE);
       } else {
         long length = path.length();
         if (length < TOTAL_SIZE) throw new IOException("HashMap Metadata file too short (" + length + ")");
         if (length > TOTAL_SIZE) throw new IOException("Corrupt Metadata file: too long (" + length + ")");
       }
-      mdFile = file.getChannel();
+      mdFile = raFile.getChannel();
       md = mdFile.map(FileChannel.MapMode.READ_WRITE, 0, TOTAL_SIZE);
       mdLong = md.asLongBuffer();
       mdInt = md.asIntBuffer();
@@ -1072,11 +1075,11 @@ public class FileHashMap implements Map<ByteBuffer,ByteBuffer>, Closeable {
     }
 
     public void close() throws IOException {
-      mdFile.close();
       md = null;
       mdLong = null;
       mdInt = null;
       mdLoadFactor = null;
+      raFile.close(); // This calls mdFile.close() internally
     }
     
     public void closeAndDelete() throws IOException {
