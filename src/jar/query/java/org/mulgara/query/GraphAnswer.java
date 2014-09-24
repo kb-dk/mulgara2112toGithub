@@ -275,7 +275,9 @@ public class GraphAnswer extends AbstractAnswer implements Answer, Serializable 
 
   /** @see java.lang.Object#clone() */
   public Object clone() {
-    return new GraphAnswer((Answer)rawAnswer.clone());
+    GraphAnswer a = (GraphAnswer)super.clone();
+    a.rawAnswer = (Answer)rawAnswer.clone();
+    return a;
   }
 
 
@@ -288,6 +290,13 @@ public class GraphAnswer extends AbstractAnswer implements Answer, Serializable 
       }
     }
     return false;
+  }
+
+  /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return super.hashCode();
   }
 
   /**
