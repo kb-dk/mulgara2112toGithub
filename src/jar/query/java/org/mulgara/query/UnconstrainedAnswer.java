@@ -234,13 +234,20 @@ public class UnconstrainedAnswer extends AbstractAnswer implements Answer, Seria
     // Gotta be non-null and of matching type
     if ((object != null) && (object instanceof Answer)) {
       try {
-        return AnswerOperations.equal(this, (Answer) object);
+        return AnswerOperations.equal(this, (Answer)object);
       } catch (TuplesException e) {
         logger.fatal("Couldn't test equality of answers", e);
       }
     }
 
     return false;
+  }
+
+  /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return super.hashCode();
   }
 
   /**

@@ -28,6 +28,7 @@ import org.mulgara.store.tuples.AbstractTuples;
 import org.mulgara.store.tuples.Annotation;
 import org.mulgara.store.tuples.RowComparator;
 import org.mulgara.store.tuples.Tuples;
+import org.mulgara.store.tuples.TuplesOperations;
 
 /**
  * An empty set of results, equivalent to {@link org.mulgara.store.tuples.EmptyTuples}.
@@ -225,5 +226,12 @@ public class NullResolution implements Resolution {
 
   public boolean equals(Object o) {
     return (o instanceof Resolution) && AbstractTuples.equals(this, (Resolution)o);
+  }
+
+  /**
+   * Added to match {@link #equals(Object)}. Throws {@link java.lang.UnsupportedOperationException}.
+   */
+  public int hashCode() {
+    return TuplesOperations.hashCode(this);
   }
 }

@@ -2218,6 +2218,15 @@ public final class TripleAVLFile {
       }
 
 
+      /**
+       * Added to match {@link #equals(Object)}.
+       * Based on the same approach as {@link AbstractTuples#hashCode()}
+       */
+      public int hashCode() {
+        return TuplesOperations.hashCode(this);
+      }
+
+
       private boolean advance() throws TuplesException {
         if (beforeStart) {
           // Reset the iterator position to the start.

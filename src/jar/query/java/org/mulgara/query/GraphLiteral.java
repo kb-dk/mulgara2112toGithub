@@ -181,6 +181,13 @@ public class GraphLiteral implements Graph {
   }
 
   /**
+   * Added to match {@link #equals(Object)}. Throws {@link java.lang.UnsupportedOperationException}.
+   */
+  public int hashCode() {
+    throw new UnsupportedOperationException("Cannot key a value from a graph");
+  }
+
+  /**
    * Returns just the default Object clone.
    */
   public Object clone() {

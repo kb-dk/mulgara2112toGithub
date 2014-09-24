@@ -179,6 +179,10 @@ public class OrderByRowComparator implements RowComparator {
         Arrays.equals(columnMap, obrc.columnMap);
   }
 
+  public int hashCode() {
+    return columnMap.hashCode() + orderList.hashCode() * 5 + session.hashCode() * 7;
+  }
+
   /**
    * METHOD TO DO
    *

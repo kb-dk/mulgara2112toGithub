@@ -154,4 +154,8 @@ public class ConstraintFalse implements ConstraintExpression {
   public boolean equals(Object o) {
     return o == INSTANCE;
   }
+  
+  public int hashCode() {
+    return super.hashCode();
+  }
 }

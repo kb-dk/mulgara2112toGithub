@@ -131,6 +131,13 @@ public class TuplesWrapperResolution implements Resolution {
 
 
   /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return constraint.hashCode() ^ tuples.hashCode();
+  }
+
+  /**
    * Clone the tuples and constraint, and re-wrap them in a new object.
    */
   public Object clone() {

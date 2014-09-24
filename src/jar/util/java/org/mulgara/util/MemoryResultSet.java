@@ -527,6 +527,10 @@ public class MemoryResultSet extends AbstractMulgaraResultSet
     }
   }
 
+  public int hashCode() {
+    return rows.hashCode();
+  }
+
   /**
    * Produce a string version of the result set. Displaying the available
    * columns and rows.

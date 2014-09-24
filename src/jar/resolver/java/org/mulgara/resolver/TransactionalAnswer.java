@@ -248,6 +248,14 @@ public class TransactionalAnswer extends AbstractAnswer implements Answer {
     }
   }
 
+  public boolean equals(Object o) {
+    return super.equals(o);
+  }
+
+  public int hashCode() {
+    return System.identityHashCode(this);
+  }
+
   private void report(String desc) {
     if (logger.isDebugEnabled()) {
       logger.debug(desc + ": " + System.identityHashCode(this) + ", xa=" + System.identityHashCode(transaction));
@@ -306,12 +314,13 @@ public class TransactionalAnswer extends AbstractAnswer implements Answer {
 
     if (answer != null) {
       report("Session forced close");
-      Throwable error = null;
       closing = true;
       try {
         answer.close();
+      } catch (TuplesException e) {
+        throw e;
       } catch (Throwable th) {
-        error = th;
+        throw new TuplesException("Error closing answer", th);
       } finally {
         try {
           transaction.dereference();
@@ -321,13 +330,6 @@ public class TransactionalAnswer extends AbstractAnswer implements Answer {
           closing = false;
           answer = null;
           transaction = null;
-        }
-        if (error != null) {
-          if (error instanceof TuplesException) {
-            throw (TuplesException)error;
-          } else {
-            throw new TuplesException("Error closing answer", error);
-          }
         }
       }
 //      close();

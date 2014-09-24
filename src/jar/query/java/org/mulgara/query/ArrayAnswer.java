@@ -378,6 +378,13 @@ public class ArrayAnswer extends AbstractAnswer implements Answer, Cloneable, Se
   }
 
   /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  /**
    * @return a formatted representation of this instance
    */
   public String toString() {

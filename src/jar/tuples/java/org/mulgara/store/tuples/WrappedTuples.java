@@ -335,6 +335,13 @@ public class WrappedTuples implements Tuples {
   }
 
   /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return TuplesOperations.hashCode(this);
+  }
+
+  /**
    * Copied from AbstractTuples.
    */
   public Annotation getAnnotation(Class<? extends Annotation> annotationClass) throws TuplesException {

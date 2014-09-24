@@ -530,6 +530,13 @@ public final class HybridTuples implements Tuples {
 
 
   /**
+   * Added to match {@link #equals(Object)}. Copy of {@link org.mulgara.store.tuples.AbstractTuples#hashCode()}
+   */
+  public int hashCode() {
+    return TuplesOperations.hashCode(this);
+  }
+
+  /**
    * METHOD TO DO
    *
    * @return RETURNED VALUE TO DO

@@ -434,6 +434,13 @@ public class AnswerImpl extends AbstractAnswer implements Answer, Serializable {
   }
 
   /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  /**
    * Generate a legible representation of the answer.
    *
    * @return a string representation of the results.

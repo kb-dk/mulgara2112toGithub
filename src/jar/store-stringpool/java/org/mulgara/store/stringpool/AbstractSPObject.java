@@ -219,6 +219,13 @@ public abstract class AbstractSPObject implements SPObject {
    * Default equality test. Based on the data type and the raw buffer.
    */
   public boolean equals(Object o) {
-    return o.getClass() == getClass() && ((SPObject)o).getData().equals(getData());
+    return o != null && o.getClass() == getClass() && ((SPObject)o).getData().equals(getData());
+  }
+
+  /**
+   * Default hashCode. Based on the raw buffer.
+   */
+  public int hashCode() {
+    return getData().hashCode();
   }
 }

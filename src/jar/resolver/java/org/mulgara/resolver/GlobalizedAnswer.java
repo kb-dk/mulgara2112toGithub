@@ -221,4 +221,11 @@ class GlobalizedAnswer extends AbstractAnswer implements Answer, Cloneable {
     }
     return false;
   }
+
+  /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return super.hashCode();
+  }
 }

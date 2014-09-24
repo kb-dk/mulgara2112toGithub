@@ -83,7 +83,11 @@ public class DefaultRowComparator implements RowComparator {
    * This class is stateless, so equality is just a type check.
    */
   public boolean equals(Object o) {
-    return o.getClass() == DefaultRowComparator.class;
+    return o != null && o.getClass() == DefaultRowComparator.class;
+  }
+
+  public int hashCode() {
+    return super.hashCode();
   }
 
   //

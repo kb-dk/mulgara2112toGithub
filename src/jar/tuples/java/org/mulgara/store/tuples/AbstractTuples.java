@@ -492,6 +492,14 @@ public abstract class AbstractTuples implements Tuples {
   }
 
   /**
+   * Added to match {@link #equals(Object)}.
+   * Builds code based on content.
+   */
+  public int hashCode() {
+    return TuplesOperations.hashCode(this);
+  }
+
+  /**
    * Tests if two tuples are identical
    * @param first The first tuples to test.
    * @param second The second tuples to test.

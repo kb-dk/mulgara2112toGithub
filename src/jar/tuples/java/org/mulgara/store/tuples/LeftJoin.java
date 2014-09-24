@@ -519,6 +519,13 @@ public class LeftJoin extends AbstractTuples implements ContextOwner {
              right.equals(((MergedComparator)o).right);
     }
 
+    /**
+     * Added to match {@link #equals(Object)}.
+     */
+    public int hashCode() {
+      return left.hashCode() + 3 * right.hashCode();
+    }
+
   }
 
   /**
@@ -757,5 +764,11 @@ public class LeftJoin extends AbstractTuples implements ContextOwner {
       return (o instanceof Tuples) && AbstractTuples.equals(this, (Tuples)o);
     }
 
+    /**
+     * Added to match {@link #equals(Object)}.
+     */
+    public int hashCode() {
+      return TuplesOperations.hashCode(this);
+    }
   }
 }

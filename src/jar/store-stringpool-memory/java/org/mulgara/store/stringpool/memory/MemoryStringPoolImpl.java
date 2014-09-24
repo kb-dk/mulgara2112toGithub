@@ -52,6 +52,7 @@ import org.mulgara.store.stringpool.xa.SPObjectFactoryImpl;
 import org.mulgara.store.tuples.Annotation;
 import org.mulgara.store.tuples.RowComparator;
 import org.mulgara.store.tuples.Tuples;
+import org.mulgara.store.tuples.TuplesOperations;
 import org.mulgara.store.xa.XANodePool;
 import org.mulgara.store.xa.XAStringPool;
 
@@ -707,6 +708,13 @@ public final class MemoryStringPoolImpl implements XAStringPool {
       }
       // differing types, so ask the other tuples to do all the work
       return ((Tuples)object).equals(this);
+    }
+
+    /**
+     * Added to match {@link #equals(Object)}.
+     */
+    public int hashCode() {
+      return TuplesOperations.hashCode(this);
     }
 
     /**

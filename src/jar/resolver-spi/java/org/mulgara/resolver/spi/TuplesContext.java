@@ -146,4 +146,7 @@ public class TuplesContext implements Context {
     return this == o;
   }
 
+  public int hashCode() {
+    return super.hashCode();
+  }
 }

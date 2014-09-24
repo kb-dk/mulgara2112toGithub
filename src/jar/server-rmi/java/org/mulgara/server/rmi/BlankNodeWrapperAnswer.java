@@ -189,5 +189,4 @@ public class BlankNodeWrapperAnswer extends AbstractAnswer implements Answer {
   public boolean next() throws TuplesException {
     return answer.next();
   }
-  
 }

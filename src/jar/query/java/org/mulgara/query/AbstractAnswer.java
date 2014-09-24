@@ -47,4 +47,10 @@ public abstract class AbstractAnswer implements Answer {
     return false;
   }
 
+  /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return AnswerOperations.hashCode(this);
+  }
 }

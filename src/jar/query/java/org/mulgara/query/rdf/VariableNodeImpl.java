@@ -130,6 +130,10 @@ public class VariableNodeImpl
     return super.equals(obj);
   }
 
+  public int hashCode() {
+    return variableName.hashCode();
+  }
+
   public String getID() {
     return variableName;
   }

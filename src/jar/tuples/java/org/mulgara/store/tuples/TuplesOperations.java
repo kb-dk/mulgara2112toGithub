@@ -1180,6 +1180,34 @@ public abstract class TuplesOperations {
     return buff;
   }
 
+  /**
+   * Calculates a consistent hash code for a tuples.
+   * @param t The tuples to get the hash code for.
+   * @return The hash code value.
+   */
+  public static int hashCode(Tuples t) {
+    t = (Tuples)t.clone();
+    int result = t.getVariables().hashCode();
+    try {
+      t.beforeFirst();
+      int cols = t.getNumberOfVariables();
+      while (t.next()) {
+        for (int i = 0; i < cols; i++) {
+          long val = t.getColumnValue(i);
+          result ^= (int)(val ^ (val >>> 32));
+        }
+      }
+    } catch (TuplesException e) {
+      throw new RuntimeException(e.toString(), e);
+    } finally {
+      try {
+        if (t != null) t.close();
+      } catch (TuplesException ex) {
+        throw new RuntimeException(ex.toString(), ex);
+      }
+    }
+    return result;
+  }
 
   /**
    * Find the list of variables which appear in both the lhs and rhs tuples.

@@ -49,6 +49,7 @@ import org.mulgara.store.tuples.Annotation;
 import org.mulgara.store.tuples.RowComparator;
 import org.mulgara.store.tuples.SimpleTuplesFormat;
 import org.mulgara.store.tuples.Tuples;
+import org.mulgara.store.tuples.TuplesOperations;
 import org.mulgara.store.xa.AVLComparator;
 import org.mulgara.store.xa.AVLFile;
 import org.mulgara.store.xa.AVLNode;
@@ -2122,6 +2123,14 @@ public class XA11StringPoolImpl implements XAStringPool, XANodePool {
         return isEqual;
       }
 
+
+      /**
+       * Added to match {@link #equals(Object)}.
+       */
+      public int hashCode() {
+        // This works with the above defined equals method
+        return TuplesOperations.hashCode(this);
+      }
 
       /** @see java.lang.Object#toString() */
       public String toString() {

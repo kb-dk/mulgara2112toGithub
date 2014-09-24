@@ -151,4 +151,33 @@ public abstract class AnswerOperations {
       }
     }
   }
+  
+  public static int hashCode(Answer ans) {
+    try {
+      // Clone the arguments to avoid interfering with their cursors
+      Answer a = (Answer)ans.clone();
+  
+      // Check that columns match
+      int numberOfVariables = a.getNumberOfVariables();
+      int result = numberOfVariables;
+  
+      try {
+        // Iterate over the rows
+        a.beforeFirst();
+        while (a.next()) {
+          // add in all of the row
+          for (int i = 0; i < numberOfVariables; i++) {
+            Object o = a.getObject(i);
+            if (o != null) result ^= o.hashCode();
+          }
+        }
+      } finally {
+        // Close the clone
+        a.close();
+      }
+      return result;
+    } catch (TuplesException e) {
+      throw new RuntimeException("Unable to generate hashCode for answer", e);
+    }
+  }
 }

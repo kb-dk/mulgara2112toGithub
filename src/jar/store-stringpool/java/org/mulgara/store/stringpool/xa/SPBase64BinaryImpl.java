@@ -304,4 +304,9 @@ public class SPBase64BinaryImpl
     SPBase64BinaryImpl b = (SPBase64BinaryImpl)o;
     return data.equals(b.data);
   }
+
+  public int hashCode() {
+    return data.hashCode();
+  }
+
 }

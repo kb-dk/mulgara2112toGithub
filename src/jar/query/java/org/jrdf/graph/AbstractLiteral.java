@@ -261,6 +261,10 @@ public abstract class AbstractLiteral extends LiteralImpl implements Literal, Se
            eq(getLanguage(), l.getLanguage());
   }
 
+  public int hashCode() {
+    return super.hashCode();
+  }
+
   public boolean isLiteral() { return true; }
 
   public boolean isBlankNode() { return false; }

@@ -129,4 +129,7 @@ public class PartialColumnComparator implements RowComparator {
            Arrays.equals(varMap, ((PartialColumnComparator)o).varMap);
   }
 
+  public int hashCode() {
+    return varMap.hashCode();
+  }
 }

@@ -196,6 +196,13 @@ public class UnconstrainedTuples extends AbstractTuples implements StoreTuples {
   }
 
   /**
+   * Added to match {@link #equals(Object)}.
+   */
+  public int hashCode() {
+    return super.hashCode();
+  }
+
+  /**
    * Returns itself.
    *
    * @return itself.
