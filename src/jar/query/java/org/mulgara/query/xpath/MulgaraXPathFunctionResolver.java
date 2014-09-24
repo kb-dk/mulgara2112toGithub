@@ -35,6 +35,7 @@ public class MulgaraXPathFunctionResolver extends MulgaraFunctionResolver {
     addFunctionGroup(new FnFunctionGroup());
     addFunctionGroup(new OpFunctionGroup());
     addFunctionGroup(new AfnFunctionGroup());
+    addFunctionGroup(new SmfFunctionGroup());
   }
 
 }
