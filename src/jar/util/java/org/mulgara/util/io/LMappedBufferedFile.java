@@ -133,13 +133,15 @@ public abstract class LMappedBufferedFile extends LBufferedFile {
       // since it would either be truncated to the same size, or larger.
       assert fullPages < pages;
       // need to remap the final page
-      buffers[pages - 1] = null;
+      // leave the last page, to cover any reads that may still be trying to read it
+      // buffers[pages - 1] = null;
       newBuffers = buffers;
       if (logger.isDebugEnabled()) logger.debug("Remapping final page only");
     } else {
       assert pages < buffers.length;
       // need to drop all of the last pages
-      for (int b = fullPages; b < buffers.length; b++) buffers[b] = null;
+      // leave the pages in the buffer to cover any reads that may still be active on them
+      // for (int b = fullPages; b < buffers.length; b++) buffers[b] = null;
       // truncate the buffers array
       newBuffers = new MappedByteBuffer[pages];
       System.arraycopy(buffers, 0, newBuffers, 0, fullPages);
@@ -167,9 +169,10 @@ public abstract class LMappedBufferedFile extends LBufferedFile {
   
     // Setting these buffers to null is a belt and suspenders approach.
     // This code is informative, rather than necessary
-    if (tmpBuffers != buffers) {
-      for (int b = fullPages; b < tmpBuffers.length; b++) tmpBuffers[b] = null;
-    }
+    // Update: commented out, to reduce the risk of out-of-order access on buffers, without needing to declare them "volatile"
+    // if (tmpBuffers != buffers) {
+    //   for (int b = fullPages; b < tmpBuffers.length; b++) tmpBuffers[b] = null;
+    // }
     if (logger.isDebugEnabled()) logger.debug("Removed " + (tmpBuffers.length - fullPages) + " pages");
   
     // tell the listeners that we've remapped
@@ -200,7 +203,6 @@ public abstract class LMappedBufferedFile extends LBufferedFile {
         topBuffer++;
       } else {
         // last buffer is partial
-        buffers[topBuffer] = null;
       }
       System.arraycopy(buffers, 0, newBuffers, 0, topBuffer);
       start = topBuffer;
