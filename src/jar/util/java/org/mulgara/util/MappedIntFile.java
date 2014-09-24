@@ -128,7 +128,7 @@ public final class MappedIntFile extends IntFile {
 
     long key = prevSize;
     try {
-      for (key = prevSize; key < newSize; ++key) {
+      for (; key < newSize; ++key) {
         putLong(key, 0);
       }
     } catch (NullPointerException e) {
