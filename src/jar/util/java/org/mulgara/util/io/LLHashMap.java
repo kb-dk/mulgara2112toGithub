@@ -22,13 +22,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import static org.mulgara.util.io.Bytes.LONG_SIZE;
+
 /**
  * A file-based hash map mapping long to long
  */
 public class LLHashMap implements Map<Long,Long> {
-
-  /** The number of bytes in a LONG */
-  private static final int LONG_BYTES = Long.SIZE >> 3;
 
   /** The internal map that maps ByteBuffer to ByteBuffer */
   private final FileHashMap map;
@@ -39,7 +38,7 @@ public class LLHashMap implements Map<Long,Long> {
    * @throws IOException If there is an error accessing the file.
    */
   public LLHashMap(File f) throws IOException {
-    map = new FileHashMap(f, LONG_BYTES, LONG_BYTES);
+    map = new FileHashMap(f, LONG_SIZE, LONG_SIZE);
   }
 
   /**
@@ -50,7 +49,7 @@ public class LLHashMap implements Map<Long,Long> {
    * @throws IOException If there is an error accessing the file.
    */
   public LLHashMap(File f, float loadFactor, long initialSize) throws IOException {
-    map = new FileHashMap(f, LONG_BYTES, LONG_BYTES, loadFactor, initialSize);
+    map = new FileHashMap(f, LONG_SIZE, LONG_SIZE, loadFactor, initialSize);
   }
 
   /**
@@ -177,7 +176,7 @@ public class LLHashMap implements Map<Long,Long> {
    *         configured with {@link IOUtil#MEM_TYPE_PROP}
    */
   private static final ByteBuffer toBytes(Object l) {
-    ByteBuffer b = IOUtil.allocate(LONG_BYTES);
+    ByteBuffer b = IOUtil.allocate(LONG_SIZE);
     b.asLongBuffer().put(0, ((Long)l).longValue());
     return b;
   }
@@ -192,7 +191,7 @@ public class LLHashMap implements Map<Long,Long> {
   private static final ByteBuffer[] toBytesPair(long first, long second) {
     ByteBuffer[] pair = new ByteBuffer[2];
     ByteBuffer b = toBytes(first, second);
-    b.position(LONG_BYTES);
+    b.position(LONG_SIZE);
     pair[1] = b.slice();
     b.flip();
     pair[0] = b.slice();
@@ -207,7 +206,7 @@ public class LLHashMap implements Map<Long,Long> {
    *         Allocated according to the type configured with {@link IOUtil#MEM_TYPE_PROP}
    */
   private static final ByteBuffer toBytes(long first, long second) {
-    ByteBuffer b = IOUtil.allocate(LONG_BYTES << 1);
+    ByteBuffer b = IOUtil.allocate(LONG_SIZE << 1);
     b.asLongBuffer().put(0, first).put(1, second);
     return b;
   }

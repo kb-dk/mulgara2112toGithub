@@ -668,17 +668,14 @@ public class FileHashMap implements Map<ByteBuffer,ByteBuffer>, Closeable {
     return fileRecords;
   }
 
-  protected long hashCode(Object b) {
-    return IOUtil.longHash(b.hashCode());
-  }
-
   /**
    * Calculate the location for a record, based on its key.
    * @param key The ByteBuffer for the key.
    * @return The record number in the file that the key specifies.
    */
   private final long recordPosition(ByteBuffer key) {
-    return hashCode(key) % (long)fileRecords;
+    long h = IOUtil.longHash(key.hashCode());
+    return h % (long)fileRecords;
   }
 
   /**

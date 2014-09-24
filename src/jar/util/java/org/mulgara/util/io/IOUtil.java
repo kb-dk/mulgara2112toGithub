@@ -148,15 +148,46 @@ public class IOUtil {
   public static final long longHash(int h) {
     long v = (long)h;
     v ^= v << 5;
-    v ^= (v << 11) + 1049;
+    v ^= (v << 11) ^ 1049;
     v ^= ((v >> 32) | (v << 32));
-    v ^= (v << 17) + 131041;
+    v ^= (v << 17) ^ 131041;
     v ^= ((v >> 56) | (v << 56));
-    v ^= (v << 23) + 8313581;
+    v ^= (v << 23) ^ 8313581;
     v ^= (((v >> 8) & 0xFF000000L) | ((v << 8) & 0xFF00000000L));
-    v ^= (v << 37) + 2147483659L;
+    v ^= (v << 37) ^ 2147483659L;
     v ^= ((v >> 32) | (v << 32));
     return v & 0x7FFFFFFFFFFFFFFFL;
   }
 
+  /**
+   * Convert an int into a long hash in a cheap way.
+   * @param The int to hash.
+   * @return A long value as an integer hash.
+   */
+  public static final long hashCode(int h) {
+    return ((long)h | (long)h << 32);
+  }
+
+  public static final long hashCode(long h) {
+    return h;
+  }
+
+  /**
+   * Determines the hashCode of a string, stretched out to a long, instead of just an int.
+   * @param s The string to determine the hashCode for.
+   * @return The hashcode.
+   */
+  public static final long hashCode(String s) {
+    long h = 0;
+    char val[] = s.toCharArray();
+    for (int i = 0; i < val.length; i++) h = 31 * h + val[i];
+    return h;
+  }
+
+  public static final long hashCode(ByteBuffer bb) {
+    long h = 1;
+    int p = bb.position();
+    for (int i = bb.limit() - 1; i >= p; i--) h = 31 * h + (long)bb.get(i);
+    return h;
+  }
 }
