@@ -166,27 +166,6 @@ public class MemoryTuples extends AbstractTuples {
   }
 
   /**
-   * Clone constructor.
-   *
-   * @param testTuples PARAMETER TO DO
-   */
-  private MemoryTuples(MemoryTuples testTuples) {
-
-    row = testTuples.row;
-    termList = testTuples.termList;
-    variableList = testTuples.variableList;
-
-    if (testTuples.getVariables() != null) {
-
-      setVariables(testTuples.getVariables());
-    }
-
-    rowMap = testTuples.rowMap;
-    lastMap = testTuples.lastMap;
-    this.tuples = null;
-  }
-
-  /**
    * Test tuples are always materialized as they represent in memory tuples.
    *
    * @return always true as test tuples are represented in memory.
@@ -368,8 +347,15 @@ public class MemoryTuples extends AbstractTuples {
    * @return RETURNED VALUE TO DO
    */
   public Object clone() {
+    MemoryTuples t = (MemoryTuples)super.clone();
+    // deep clone the variables
+    Variable[] vars = getVariables();
+    if (vars != null && vars.length > 0) {
+      t.setVariables(getVariables());
+    }
+    t.tuples = null;
 
-    return new MemoryTuples(this);
+    return t;
   }
 
   /**
@@ -379,16 +365,6 @@ public class MemoryTuples extends AbstractTuples {
   public void close() {
 
     // NO-OP
-  }
-
-  /**
-   * METHOD TO DO
-   *
-   * @return RETURNED VALUE TO DO
-   */
-  public int hashCode() {
-
-    return termList.hashCode();
   }
 
   /**
