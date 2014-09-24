@@ -42,6 +42,7 @@ import java.util.Set;
 
 import javax.activation.MimeType;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.jrdf.graph.Triple;
 import org.mulgara.query.Answer;
@@ -577,13 +578,12 @@ class SessionWrapperRemoteSession implements RemoteSession, Unreferenced  {
   }
 
   public void unreferenced() {
-    if (logger.isDebugEnabled())
-      logger.debug("Closing unreferenced remote session " + session);
+    if (logger.isDebugEnabled()) logger.debug("Closing unreferenced remote session " + session);
 
     try {
       close();
     } catch (Exception e) {
-      logger.warn("Error closing unreferenced session " + session, e);
+      if (logger.isEnabledFor(Level.WARN)) logger.warn("Error closing unreferenced session " + session, e);
     }
   }
 

@@ -55,7 +55,7 @@ public class PersistTuplesWrapperStatements extends TuplesWrapperStatements
 {
   /** Logger.  */
   @SuppressWarnings("unused")
-  private final Logger logger = Logger.getLogger(PersistTuplesWrapperStatements.class.getName());
+  private static final Logger logger = Logger.getLogger(PersistTuplesWrapperStatements.class.getName());
 
   ResolverSession resolverSession;
   

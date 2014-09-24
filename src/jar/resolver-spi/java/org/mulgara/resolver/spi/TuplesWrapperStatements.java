@@ -53,7 +53,7 @@ import org.mulgara.store.tuples.WrappedTuples;
 public class TuplesWrapperStatements extends WrappedTuples implements Statements
 {
   /** Logger.  */
-  private final Logger logger =
+  private static final Logger logger =
     Logger.getLogger(TuplesWrapperStatements.class.getName());
 
   /** Column index of statement subjects.  */

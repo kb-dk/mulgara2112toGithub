@@ -143,10 +143,12 @@ public abstract class DataOutputTx extends DataTx {
       if (srv != null) {
         try {
           Rmi.unexportObject(srv, false);
-        } catch (NoSuchObjectException ex) {};
+        } catch (NoSuchObjectException ex) { /* nothing to clean up, so continue */ };
         try {
           srv.close();
-        } catch (IOException e) {}
+        } catch (IOException e) {
+          logger.warn("Unable to cleanly close data stream to remote object", e);
+        }
       }
     }
   }

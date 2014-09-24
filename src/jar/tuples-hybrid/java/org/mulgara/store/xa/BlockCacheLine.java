@@ -107,7 +107,7 @@ public class BlockCacheLine extends CacheLine {
 
       // If just cloned, then read in previous block.
       if (block == null) {
-        logger.debug("BlockCache " + this + " Refreshing from clone block " + (nextBlockId - 1));
+        if (logger.isDebugEnabled()) logger.debug("BlockCache " + this + " Refreshing from clone block " + (nextBlockId - 1));
         block = file.readBlock(nextBlockId - 1);
       }
 

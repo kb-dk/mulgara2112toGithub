@@ -125,7 +125,7 @@ public abstract class TransitiveFunction {
         while (given.next()) {
           gs += " " + given.getColumnValue(0);
         }
-        logger.debug("Joined with a given of: " + gs);
+        if (logger.isDebugEnabled()) logger.debug("Joined with a given of: " + gs);
       }
 
       TuplesException te = null;

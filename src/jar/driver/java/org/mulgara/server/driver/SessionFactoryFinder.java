@@ -149,11 +149,15 @@ public abstract class SessionFactoryFinder {
         // If the lookup is successful connect using RMI.
         className = (String)schemeMap.get(scheme);
       } catch (NamingException ne) {
-        logger.debug("Failed to connect via RMI", ne);
+        if (logger.isDebugEnabled()) {
+          logger.debug("Failed to connect via RMI", ne);
+        }
 
         // If there is an exception connect locally.
         if (!isRemote) {
-          logger.debug("Attempting to fallback to local", ne);
+          if (logger.isDebugEnabled()) {
+            logger.debug("Attempting to fallback to local", ne);
+          }
           className = (String)schemeMap.get("local");
         } else {
           throw new SessionFactoryFinderException("Cannot find server " + serverURI, ne);

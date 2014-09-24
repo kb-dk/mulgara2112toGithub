@@ -183,7 +183,7 @@ public class ExternalFn extends AbstractAccessorFn implements NumericExpression 
       return TypedLiteral.newLiteral(value.toString(), fnUri, null);
     }
     if (extFn == null) {
-      logger.debug("Attempting to execute an unsupported function: " + fnUri + "(" + resolveArgs() + ")");
+      if (logger.isDebugEnabled()) logger.debug("Attempting to execute an unsupported function: " + fnUri + "(" + resolveArgs() + ")");
       return Bool.FALSE;
     }
     if (unrecoverableError) return Bool.FALSE;
@@ -249,6 +249,7 @@ public class ExternalFn extends AbstractAccessorFn implements NumericExpression 
           }
         } catch (Exception e) {
           // this resolver is unable to handle the given QName
+          result = null;
         }
       }
     }

@@ -37,6 +37,7 @@ import java.util.LinkedList;
 import javax.activation.MimeType;
 
 // logging
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 // JRDF
@@ -374,10 +375,14 @@ class Parser extends Thread implements ErrorHandler, StatementHandler {
    * @param e The exception being handled.
    */
   public synchronized void error(SAXParseException e) {
-    logger.warn("Recoverable error, line " + e.getLineNumber() + ", column " +
-                e.getColumnNumber() + ": " + e.getMessage());
-    logger.debug("Recoverable error, line " + e.getLineNumber() + ", column " +
-        e.getColumnNumber() + ": " + e.getMessage(), e);
+    if (logger.isEnabledFor(Level.WARN)) {
+      logger.warn("Recoverable error, line " + e.getLineNumber() + ", column " +
+                  e.getColumnNumber() + ": " + e.getMessage());
+    }
+    if (logger.isDebugEnabled()) {
+      logger.debug("Recoverable error, line " + e.getLineNumber() + ", column " +
+                   e.getColumnNumber() + ": " + e.getMessage(), e);
+    }
   }
 
   /**
@@ -387,10 +392,15 @@ class Parser extends Thread implements ErrorHandler, StatementHandler {
   public synchronized void fatalError(SAXParseException e)
   {
     exception = e;
-    logger.error("Fatal error, line " + e.getLineNumber() + ", column " +
-                 e.getColumnNumber() + ": " + e.getMessage());
-    logger.debug("Fatal error, line " + e.getLineNumber() + ", column " +
-        e.getColumnNumber() + ": " + e.getMessage(), e);
+    if (logger.isEnabledFor(Level.ERROR)) {
+      logger.error("Fatal error, line " + e.getLineNumber() + ", column " +
+                   e.getColumnNumber() + ": " + e.getMessage());
+    }
+    if (logger.isDebugEnabled()) {
+      logger.debug("Fatal error, line " + e.getLineNumber() + ", column " +
+                   e.getColumnNumber() + ": " + e.getMessage(), e);
+    }
+        
   }
 
   /**
@@ -398,10 +408,14 @@ class Parser extends Thread implements ErrorHandler, StatementHandler {
    * @param e The exception being warned about
    */
   public void warning(SAXParseException e) {
-    logger.warn("Warning, line " + e.getLineNumber() + ", column " +
-                e.getColumnNumber() + ": " + e.getMessage());
-    logger.debug("Warning, line " + e.getLineNumber() + ", column " +
-        e.getColumnNumber() + ": " + e.getMessage(), e);
+    if (logger.isEnabledFor(Level.WARN)) {
+      logger.warn("Warning, line " + e.getLineNumber() + ", column " +
+                  e.getColumnNumber() + ": " + e.getMessage());
+    }
+    if (logger.isDebugEnabled()) {
+      logger.debug("Warning, line " + e.getLineNumber() + ", column " +
+                   e.getColumnNumber() + ": " + e.getMessage(), e);
+    }
   }
 
   //

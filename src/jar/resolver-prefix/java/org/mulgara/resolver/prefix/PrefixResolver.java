@@ -202,8 +202,10 @@ public class PrefixResolver implements Resolver
 
       // check the constraint for consistency
       if ((property != mulgaraPrefix && property != mulgaraStringPrefix) || !(prefixNode instanceof Literal || prefixNode instanceof URIReference)) {
-        logger.debug("property = " + property +", mulgaraPrefix = " + mulgaraPrefix);
-        logger.debug("element(2): " + prefixNode + " [" + prefixNode.getClass().getName() + "]");
+        if (logger.isDebugEnabled()) {
+          logger.debug("property = " + property +", mulgaraPrefix = " + mulgaraPrefix);
+          logger.debug("element(2): " + prefixNode + " [" + prefixNode.getClass().getName() + "]");
+        }
         throw new QueryException("Prefix resolver can only be used for prefix constraints: " + constraint);
       }
 

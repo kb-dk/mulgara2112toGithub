@@ -208,9 +208,9 @@ public class ConstraintOperations
     try {
       if (logger.isDebugEnabled()) {
         logger.debug("Binding Variables in ConstraintExpression[" + constraintExpr.getClass() + "]");
+        logger.debug("binding variables for: " + constraintExpr + " with " + bindings);
       }
 
-      logger.debug("binding variables for: " + constraintExpr + " with " + bindings);
       ConstraintBindingHandler op = (ConstraintBindingHandler)constraintBindingHandlers.get(constraintExpr.getClass());
       if (op == null) {
         throw new QueryException("Unknown ConstraintExpression type: " + constraintExpr.getClass() + " known types: " + constraintBindingHandlers.keySet());

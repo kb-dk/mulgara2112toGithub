@@ -564,7 +564,7 @@ class RemoteAnswerWrapperAnswer extends AbstractAnswer implements Answer, Clonea
 
         // log exception and include the stack trace that created this Thread.
         logger.warn("Exception thrown in prefetchThread.");
-        if (caller != null) logger.debug("Prefetch caller: " + caller);
+        if (caller != null && logger.isDebugEnabled()) logger.debug("Prefetch caller: " + caller);
         logger.warn("Caused by", e);
       }
     }

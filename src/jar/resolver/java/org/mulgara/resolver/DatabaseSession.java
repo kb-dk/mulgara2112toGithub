@@ -742,7 +742,7 @@ class DatabaseSession implements Session {
       MulgaraTransaction transaction = transactionFactory.getTransaction(operation.isWriteOperation());
       transaction.execute(operation, metadata);
     } catch (MulgaraTransactionException em) {
-      logger.debug("Error executing operation: " + errorString, em);
+      if (logger.isDebugEnabled()) logger.debug("Error executing operation: " + errorString, em);
       throw new QueryException(errorString + ": " + StackTrace.getReasonMessage(em), em);
     }
   }

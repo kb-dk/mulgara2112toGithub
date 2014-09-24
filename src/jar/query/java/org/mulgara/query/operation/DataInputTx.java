@@ -148,7 +148,7 @@ public abstract class DataInputTx extends DataTx {
       if (srv != null) {
         try {
           Rmi.unexportObject(srv, false);
-        } catch (NoSuchObjectException ex) {};
+        } catch (NoSuchObjectException ex) { /* nothing to clean up, so continue */ };
       }
       try {
         if (remoteInputStream != null) remoteInputStream.close();

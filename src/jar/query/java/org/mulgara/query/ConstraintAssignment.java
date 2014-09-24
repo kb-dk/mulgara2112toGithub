@@ -120,7 +120,7 @@ public class ConstraintAssignment implements ConstraintExpression {
       try {
         v2 = tmpConstraint.expr.getValue();
         exprEq = v1.equals(v2);
-      } catch (QueryException e2) { }
+      } catch (QueryException e2) { /* unbound values are unequal, so continue to return false */ }
     } catch (QueryException e) {
       try {
         v2 = tmpConstraint.expr.getValue();
