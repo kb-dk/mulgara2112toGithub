@@ -629,35 +629,38 @@ public final class XAStatementStoreImpl implements XAStatementStore {
     try {
       unmap();
     } finally {
+      IOException savedEx = null;
+      for (int i = 0; i < NR_INDEXES; ++i) {
+        try {
+          if (tripleAVLFiles[i] != null) {
+            tripleAVLFiles[i].close();
+          }
+        } catch (IOException ex) {
+          if (savedEx == null) savedEx = ex;
+        }
+      }
+
+      if (metarootFile != null) {
+        try {
+          metarootFile.close();
+        } catch (IOException ex) {
+          if (savedEx == null) savedEx = ex;
+        }
+      }
+
       try {
-        IOException savedEx = null;
-
-        for (int i = 0; i < NR_INDEXES; ++i) {
-          try {
-            if (tripleAVLFiles[i] != null) {
-              tripleAVLFiles[i].close();
-            }
-          } catch (IOException ex) {
-            savedEx = ex;
-          }
-        }
-
-        if (metarootFile != null) {
-          try {
-            metarootFile.close();
-          } catch (IOException ex) {
-            savedEx = ex;
-          }
-        }
-
-        if (savedEx != null) {
-          throw new StatementStoreException("I/O error closing graph.", savedEx);
-        }
-      } finally {
         if (lockFile != null) {
           lockFile.release();
           lockFile = null;
         }
+      } catch (Exception e) {
+        // only unchecked exceptions may arrive here
+        // Existing I/O exceptions to take priority
+        if (savedEx == null) throw new StatementStoreException("Error releasing lock file", e);
+      }
+
+      if (savedEx != null) {
+        throw new StatementStoreException("I/O error closing graph.", savedEx);
       }
     }
   }
@@ -674,37 +677,41 @@ public final class XAStatementStoreImpl implements XAStatementStore {
     try {
       unmap();
     } finally {
+      IOException savedEx = null;
+      for (int i = 0; i < NR_INDEXES; ++i) {
+        try {
+          if (tripleAVLFiles[i] != null) tripleAVLFiles[i].delete();
+        } catch (IOException ex) {
+          savedEx = ex;
+        }
+      }
+
+      if (metarootFile != null) {
+        try {
+          metarootFile.delete();
+        } catch (IOException ex) {
+          savedEx = ex;
+        }
+      }
+
+      for (int i = 0; i < NR_INDEXES; ++i) {
+        tripleAVLFiles[i] = null;
+      }
+      metarootFile = null;
+
       try {
-        IOException savedEx = null;
-
-        for (int i = 0; i < NR_INDEXES; ++i) {
-          try {
-            if (tripleAVLFiles[i] != null) tripleAVLFiles[i].delete();
-          } catch (IOException ex) {
-            savedEx = ex;
-          }
-        }
-
-        if (metarootFile != null) {
-          try {
-            metarootFile.delete();
-          } catch (IOException ex) {
-            savedEx = ex;
-          }
-        }
-
-        if (savedEx != null) {
-          throw new StatementStoreException("I/O error deleting graph.", savedEx);
-        }
-      } finally {
-        for (int i = 0; i < NR_INDEXES; ++i) {
-          tripleAVLFiles[i] = null;
-        }
-        metarootFile = null;
         if (lockFile != null) {
           lockFile.release();
           lockFile = null;
         }
+      } catch (Exception e) {
+        // only unchecked exceptions may arrive here
+        // Existing I/O exceptions to take priority
+        if (savedEx == null) throw new StatementStoreException("Error releasing lock file", e);
+      }
+
+      if (savedEx != null) {
+        throw new StatementStoreException("I/O error deleting graph.", savedEx);
       }
     }
   }
