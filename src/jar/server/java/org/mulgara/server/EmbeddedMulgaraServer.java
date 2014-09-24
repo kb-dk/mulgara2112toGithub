@@ -944,16 +944,18 @@ public class EmbeddedMulgaraServer implements SessionFactoryProvider {
       int port = EmbeddedMulgaraServer.getShutdownHookPort();
 
       // bind to the specified socket on the local host
+      Socket socket = null;
+      BufferedReader input = null;
       try {
         shutdownSocket = new ServerSocket(port, 0, InetAddress.getByName("localhost"));
 
         // wait until a request to stop the server
         while (!stop) {
           // wait for a shutdown request
-          Socket socket = shutdownSocket.accept();
+          socket = shutdownSocket.accept();
 
           // read the response from the client
-          BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+          input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
           // check if the require request is correct
           String message = null;
@@ -976,6 +978,20 @@ public class EmbeddedMulgaraServer implements SessionFactoryProvider {
       } catch (Exception ex) {
         log.error("Unable to establish shutdown socket on port " + port, ex);
       } finally {
+        if (input != null) {
+          try {
+            input.close();
+          } catch (IOException e) {
+            log.error("Unexpected problem closing input from a socket");
+          }
+        }
+        if (socket != null) {
+          try {
+            socket.close();
+          } catch (IOException e) {
+            log.error("Unexpected problem closing socket");
+          }
+        }
         // attempt to close the socket
         try {
           shutdownSocket.close();
