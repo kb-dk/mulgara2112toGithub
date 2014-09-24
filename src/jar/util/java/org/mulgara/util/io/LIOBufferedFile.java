@@ -92,7 +92,7 @@ public class LIOBufferedFile extends LBufferedFile {
   class SystemBuffer {
     ByteBuffer buffer;
     public SystemBuffer(ByteBuffer b) { buffer = b; }
-    public boolean equals(Object o) { return buffer == ((SystemBuffer)o).buffer; }
+    public boolean equals(Object o) { return o != null && buffer == ((SystemBuffer)o).buffer; }
     public int hashCode() { return System.identityHashCode(buffer); }
   }
 
