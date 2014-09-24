@@ -82,6 +82,6 @@ public class SubjectNodeComparator extends NodeComparator<Triple> {
     }
 
     //compare subjects
-    return super.compare(triple1.getSubject(), triple2.getSubject());
+    return super.nodeCompare(triple1.getSubject(), triple2.getSubject());
   }
 }

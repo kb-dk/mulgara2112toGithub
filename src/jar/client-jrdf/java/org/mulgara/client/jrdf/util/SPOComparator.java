@@ -91,14 +91,14 @@ public class SPOComparator extends NodeComparator<Triple> {
     }
 
     //compare by subject first
-    int subjectCompare = super.compare(triple1.getSubject(), triple2.getSubject());
+    int subjectCompare = super.nodeCompare(triple1.getSubject(), triple2.getSubject());
     if (subjectCompare != 0) {
 
       return subjectCompare;
     }
 
     //subjects are equal, compare predicates
-    int predicateCompare = super.compare(triple1.getPredicate(),
+    int predicateCompare = super.nodeCompare(triple1.getPredicate(),
                                          triple2.getPredicate());
     if (predicateCompare != 0) {
 
@@ -106,6 +106,6 @@ public class SPOComparator extends NodeComparator<Triple> {
     }
 
     //subjects and predicates are equal, return the object result
-    return super.compare(triple1.getObject(), triple2.getObject());
+    return super.nodeCompare(triple1.getObject(), triple2.getObject());
   }
 }

@@ -90,7 +90,7 @@ public class NodeComparator<T> implements Comparator<T> {
    * @param node2 Object
    * @return int
    */
-  public int compare(Object node1, Object node2) {
+  public int compare(T node1, T node2) {
 
     //validate
     if (! (node1 instanceof Node)) {
@@ -103,7 +103,7 @@ public class NodeComparator<T> implements Comparator<T> {
       throw new IllegalArgumentException("'node2' is not a JRDF Node. node2: " + node1);
     }
 
-    return this.compare( (Node) node1, (Node) node2);
+    return this.nodeCompare( (Node) node1, (Node) node2);
   }
 
   /**
@@ -113,7 +113,7 @@ public class NodeComparator<T> implements Comparator<T> {
    * @param node2 Node
    * @return int
    */
-  protected int compare(Node node1, Node node2) {
+  protected int nodeCompare(Node node1, Node node2) {
 
     //value to be returned
     int compare = 0;
@@ -131,13 +131,13 @@ public class NodeComparator<T> implements Comparator<T> {
       //determine types and call appropriate method
       if (nodeValue1 == URI_NODE_VALUE) {
 
-        compare = this.compare( (URIReference) node1, (URIReference) node2);
+        compare = this.nodeCompare( (URIReference) node1, (URIReference) node2);
       } else if (nodeValue1 == LITERAL_NODE_VALUE) {
 
-        compare = this.compare( (Literal) node1, (Literal) node2);
+        compare = this.nodeCompare( (Literal) node1, (Literal) node2);
       } else if (nodeValue1 == BLANK_NODE_VALUE) {
 
-        compare = this.compare( (BlankNode) node1, (BlankNode) node2);
+        compare = this.nodeCompare( (BlankNode) node1, (BlankNode) node2);
       } else {
 
         //should not get here...
@@ -157,13 +157,13 @@ public class NodeComparator<T> implements Comparator<T> {
    * @param node2 URIReference
    * @return int
    */
-  private int compare(URIReference node1, URIReference node2) {
+  private int nodeCompare(URIReference node1, URIReference node2) {
 
     //convert to String
     String uri1 = node1.getURI().toString();
     String uri2 = node2.getURI().toString();
 
-    return this.compare(uri1, uri2);
+    return this.nodeCompare(uri1, uri2);
   }
 
   /**
@@ -173,13 +173,13 @@ public class NodeComparator<T> implements Comparator<T> {
    * @param node2 BlankNode
    * @return int
    */
-  private int compare(BlankNode node1, BlankNode node2) {
+  private int nodeCompare(BlankNode node1, BlankNode node2) {
 
     //convert to String
     String string1 = node1.toString();
     String string2 = node2.toString();
 
-    return this.compare(string1, string2);
+    return this.nodeCompare(string1, string2);
   }
 
   /**
@@ -189,13 +189,13 @@ public class NodeComparator<T> implements Comparator<T> {
    * @param node2 Literal
    * @return int
    */
-  private int compare(Literal node1, Literal node2) {
+  private int nodeCompare(Literal node1, Literal node2) {
 
     //convert to String
     String string1 = node1.getLexicalForm();
     String string2 = node2.getLexicalForm();
 
-    return this.compare(string1, string2);
+    return this.nodeCompare(string1, string2);
   }
 
   /**
@@ -205,7 +205,7 @@ public class NodeComparator<T> implements Comparator<T> {
    * @param string2 String
    * @return int
    */
-  private int compare(String string1, String string2) {
+  private int nodeCompare(String string1, String string2) {
 
     return string1.compareTo(string2);
   }

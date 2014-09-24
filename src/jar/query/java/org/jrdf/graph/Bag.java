@@ -79,7 +79,7 @@ public interface Bag extends Container {
    * @throws IllegalArgumentException if the given object is not the correct
    *   type, Bag.
    */
-  boolean containsAll(Collection<ObjectNode> c)
+  boolean containsAll(Collection<?> c)
       throws IllegalArgumentException;
 
   /**
@@ -89,7 +89,7 @@ public interface Bag extends Container {
    * @throws IllegalArgumentException if the given object is not the correct
    *   type, Bag.
    */
-  boolean addAll(Collection<ObjectNode> c) throws IllegalArgumentException;
+  boolean addAll(Collection<? extends ObjectNode> c) throws IllegalArgumentException;
 
   /**
    * ${@inheritDoc}
@@ -98,7 +98,7 @@ public interface Bag extends Container {
    * @throws IllegalArgumentException if the given object is not the correct
    *   type, Bag.
    */
-  boolean removeAll(Collection<ObjectNode> c) throws IllegalArgumentException;
+  boolean removeAll(Collection<?> c) throws IllegalArgumentException;
 
   /**
    * ${@inheritDoc}
@@ -107,5 +107,5 @@ public interface Bag extends Container {
    * @throws IllegalArgumentException if the given object is not the correct
    *   type, Bag.
    */
-  boolean retainAll(Collection<ObjectNode> c) throws IllegalArgumentException;
+  boolean retainAll(Collection<?> c) throws IllegalArgumentException;
 }

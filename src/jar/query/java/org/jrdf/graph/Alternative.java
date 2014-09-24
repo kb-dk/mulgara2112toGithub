@@ -78,7 +78,7 @@ public interface Alternative extends Container {
     * @throws IllegalArgumentException if the given object is not the correct
     *   type, Alternative.
     */
-   boolean containsAll(Collection<ObjectNode> c)
+   boolean containsAll(Collection<?> c)
        throws IllegalArgumentException;
 
    /**
@@ -87,7 +87,7 @@ public interface Alternative extends Container {
     * @throws IllegalArgumentException if the given object is not the correct
     *   type, Alternative.
     */
-   boolean addAll(Collection<ObjectNode> c)
+   boolean addAll(Collection<? extends ObjectNode> c)
        throws IllegalArgumentException;
 
    /**
@@ -96,7 +96,7 @@ public interface Alternative extends Container {
     * @throws IllegalArgumentException if the given object is not the correct
     *   type, Alternative.
     */
-   boolean removeAll(Collection<ObjectNode> c)
+   boolean removeAll(Collection<?> c)
        throws IllegalArgumentException;
 
    /**
@@ -105,6 +105,6 @@ public interface Alternative extends Container {
     * @throws IllegalArgumentException if the given object is not the correct
     *   type, Alternative.
     */
-   boolean retainAll(Collection<ObjectNode> c)
+   boolean retainAll(Collection<?> c)
        throws IllegalArgumentException;
 }

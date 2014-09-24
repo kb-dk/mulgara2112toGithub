@@ -82,6 +82,6 @@ public class ObjectNodeComparator extends NodeComparator<Triple> {
     }
 
     //compare objects
-    return super.compare(triple1.getObject(), triple2.getObject());
+    return super.nodeCompare(triple1.getObject(), triple2.getObject());
   }
 }

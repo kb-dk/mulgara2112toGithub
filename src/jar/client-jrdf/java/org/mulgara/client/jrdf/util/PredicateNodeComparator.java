@@ -82,6 +82,6 @@ public class PredicateNodeComparator extends NodeComparator<Triple> {
     }
 
     //compare predicates
-    return super.compare(triple1.getPredicate(), triple2.getPredicate());
+    return super.nodeCompare(triple1.getPredicate(), triple2.getPredicate());
   }
 }
