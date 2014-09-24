@@ -633,6 +633,14 @@ public class MemoryResultSet extends AbstractMulgaraResultSet
     throw new SQLException(NOT_IMPLEMENTED);
   }
 
+  public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+    throw new SQLException(NOT_IMPLEMENTED);
+  }
+
+  public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+    throw new SQLException(NOT_IMPLEMENTED);
+  }
+
   public boolean isClosed() throws SQLException {
     throw new SQLException(NOT_IMPLEMENTED);
   }
